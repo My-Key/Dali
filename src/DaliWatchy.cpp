@@ -21,6 +21,9 @@ const double BATTERY_MIN = 0.5;
 const double BATTERY_RANGE = 1.0 - BATTERY_MIN;
 const double BATTERY_WARNING = BATTERY_MIN + ((VOLTAGE_WARNING - VOLTAGE_MIN) / VOLTAGE_RANGE) * BATTERY_RANGE;
 
+const double DEFORM_RANGE = 0.2;
+const double DEFAULT_SCALE = 1 - DEFORM_RANGE;
+
 const Vector HAND[] =
 {{0, -1.0},
  {0, -0.8}, 
@@ -133,10 +136,10 @@ void DaliWatchy::drawWatchFace()
   {
     double value = (double)i / VECTOR_SIZE;
 
-    scale[i] = 0.8 
-    + sin((value + hourNormalized * 2) * PI * 4) * 0.05
-    + sin((value + -hourNormalized * 12) * PI * 6) * 0.075
-    + sin((value + minuteNormalized) * PI * 10) * 0.075;
+    scale[i] = DEFAULT_SCALE 
+    + sin((value + hourNormalized * 2) * PI * 4) * DEFORM_RANGE * 0.25
+    + sin((value + -hourNormalized * 12) * PI * 6) * DEFORM_RANGE * 0.375
+    + sin((value + minuteNormalized) * PI * 10) * DEFORM_RANGE * 0.375;
   }
 
   RecalculateNormal(scale, normals2);
